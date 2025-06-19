@@ -14,16 +14,17 @@
   pointer-events: none;
   background: white;
   border-radius: 8px;
-  padding: 8px 12px;
   font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  max-width: 200px;
+  max-width: 260px;
+  padding: 10px 14px;
   z-index: 999;
   white-space: normal;
   word-break: break-word;
+  overflow-wrap: break-word;
 }
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
   #tooltip {
     font-size: 12px;
     max-width: 150px;
@@ -806,10 +807,25 @@
             tooltip.innerText = tooltipsMap[id];
             tooltip.style.display = "block";
           });
-          el.addEventListener("mousemove", e => {
-            tooltip.style.left = e.pageX + 15 + "px";
-            tooltip.style.top = e.pageY + 15 + "px";
-          });
+        el.addEventListener("mousemove", e => {
+  const tooltipWidth = tooltip.offsetWidth;
+  const tooltipHeight = tooltip.offsetHeight;
+  const padding = 20;
+
+  let left = e.pageX + 15;
+  let top = e.pageY + 15;
+
+  if ((left + tooltipWidth + padding) > window.innerWidth) {
+    left = e.pageX - tooltipWidth - 15;
+  }
+
+  if ((top + tooltipHeight + padding) > window.innerHeight) {
+    top = e.pageY - tooltipHeight - 15;
+  }
+
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+});
           el.addEventListener("mouseleave", () => {
             tooltip.style.display = "none";
           });
