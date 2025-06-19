@@ -9,21 +9,26 @@
       margin: 0;
       font-family: 'Montserrat', sans-serif;
     }
-    .tooltip {
-      position: absolute;
-      display: none;
-      padding: 10px 14px;
-      background: white;
-      color: #000;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      max-width: 250px;
-      line-height: 1.4;
-      pointer-events: none;
-      z-index: 1000;
-    }
+#tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 200px;
+  z-index: 999;
+  white-space: normal;
+  word-break: break-word;
+}
+@media (max-width: 768px) {
+  #tooltip {
+    font-size: 12px;
+    max-width: 150px;
+  }
+}
     svg {
       width: 100%;
       height: auto;
