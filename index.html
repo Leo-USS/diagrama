@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagrama Interactivo SVG</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+      font-family: 'Montserrat', sans-serif;
+    }
+    #tooltip {
+      position: absolute;
+      background: white;
+      color: black;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      pointer-events: none;
+      display: none;
+      max-width: 260px;
+      line-height: 1.4em;
+    }
+    object {
+      width: 100%;
+      height: 100vh;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="tooltip"></div>
+  <object id="svgObject" data="Diagrama-interactivo-final.svg" type="image/svg+xml"></object>
+
+  <script>
+    const tooltip = document.getElementById("tooltip");
+    const tooltipData = {
+      "base_interna_2": "Público objetivo",
+      "anillo_intermedio": "Currículo activador integrado en los planes de estudio, enfocado en desarrollar competencias de empleabilidad",
+      "FORMACIÓN": "Potenciamos tus conocimientos y habilidades esenciales para el mundo laboral actual y futuro, asegurando una base sólida para que inicies tu carrera.",
+      "EXPERIENCIA": "Fomentamos tu aprendizaje a través de la práctica y vivencias universitarias y profesionales significativas, ayudándote a construir tu camino.",
+      "VINCULO_Y_REDES": "Te ayudamos a construir y proyectar las conexiones con el entorno y tu comunidad profesional, claves para tu futuro."
+    };
+
+    document.getElementById("svgObject").addEventListener("load", () => {
+      const svgDoc = document.getElementById("svgObject").contentDocument;
+
+      Object.keys(tooltipData).forEach(id => {
+        const el = svgDoc.getElementById(id);
+        if (!el) return;
+
+        el.style.cursor = "pointer";
+
+        el.addEventListener("mouseenter", () => {
+          tooltip.innerText = tooltipData[id];
+          tooltip.style.display = "block";
+          el.style.filter = "brightness(1.1)";
+        });
+        el.addEventListener("mouseleave", () => {
+          tooltip.style.display = "none";
+          el.style.filter = "";
+        });
+        el.addEventListener("mousemove", (e) => {
+          tooltip.style.left = (e.clientX + 15) + "px";
+          tooltip.style.top = (e.clientY + 15) + "px";
+        });
+      });
+    });
+  </script>
+</body>
+</html>
