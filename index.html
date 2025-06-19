@@ -3,27 +3,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Diagrama Interactivo con Tooltips</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <title>Diagrama Interactivo Inline</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      background: white;
       font-family: 'Montserrat', sans-serif;
     }
     .tooltip {
       position: absolute;
-      background: white;
-      border: 1px solid #aaa;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 13px;
-      pointer-events: none;
-      white-space: pre-wrap;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       display: none;
-      max-width: 240px;
+      padding: 10px 14px;
+      background: white;
+      color: #000;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      max-width: 250px;
+      line-height: 1.4;
+      pointer-events: none;
+      z-index: 1000;
     }
     svg {
       width: 100%;
@@ -37,7 +36,7 @@
   </style>
 </head>
 <body>
-  <div id="tooltip" class="tooltip"></div>
+  <div class="tooltip" id="tooltip"></div>
   <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1118.97 1118.96">
   <g id="Base_interna_2" data-name="Base interna 2">
@@ -784,27 +783,33 @@
     const tooltip = document.getElementById("tooltip");
     const tooltipsMap = {
       "Base_interna_2": "Público objetivo",
-      "Anillo_Intermedio": "Currículo activador integrado en los planes de estudio, enfocado en desarrollar competencias de empleabilidad",
+      "Anillo_Intermedio": "Actividades características a desarrollar en el marco del modelo.",
+      "Curriculo_activador": "Currículo activador integrado en los planes de estudio, enfocado en desarrollar competencias de empleabilidad.",
       "Formacion": "Potenciamos tus conocimientos y habilidades esenciales para el mundo laboral actual y futuro, asegurando una base sólida para que inicies tu carrera.",
       "Experiencia": "Fomentamos tu aprendizaje a través de la práctica y vivencias universitarias y profesionales significativas, ayudándote a construir tu camino.",
       "Vinculo_y_Redes": "Te ayudamos a construir y proyectar las conexiones con el entorno y tu comunidad profesional, claves para tu futuro."
     };
 
-    document.querySelectorAll("g").forEach(el => {
-      const id = el.id;
-      if (tooltipsMap[id]) {
-        el.addEventListener("mouseenter", e => {
-          tooltip.innerText = tooltipsMap[id];
-          tooltip.style.display = "block";
-        });
-        el.addEventListener("mousemove", e => {
-          tooltip.style.left = e.pageX + 15 + "px";
-          tooltip.style.top = e.pageY + 15 + "px";
-        });
-        el.addEventListener("mouseleave", () => {
-          tooltip.style.display = "none";
-        });
-      }
+    document.addEventListener("DOMContentLoaded", () => {
+      const svgDoc = document.querySelector("svg");
+      const elements = svgDoc.querySelectorAll("g");
+
+      elements.forEach(el => {
+        const id = el.id;
+        if (tooltipsMap[id]) {
+          el.addEventListener("mouseenter", e => {
+            tooltip.innerText = tooltipsMap[id];
+            tooltip.style.display = "block";
+          });
+          el.addEventListener("mousemove", e => {
+            tooltip.style.left = e.pageX + 15 + "px";
+            tooltip.style.top = e.pageY + 15 + "px";
+          });
+          el.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+          });
+        }
+      });
     });
   </script>
 </body>
